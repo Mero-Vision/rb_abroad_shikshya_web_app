@@ -1,27 +1,31 @@
 import {
-   CreditScoreOutlined,
-   FactCheckOutlined,
+   ContactPageOutlined,
+   InfoOutlined,
+   SettingsOutlined,
 } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import React from "react";
 import useTabs from "../../../../../hooks/useTabs";
+import AboutData from "./AboutData";
+import ContactData from "./ContactData";
+import SiteData from "./SiteData";
 
 const SiteSettings = () => {
    const data = [
       {
          label: "Settings Data",
          value: "settings_data",
-         icon: <FactCheckOutlined />,
+         icon: <SettingsOutlined />,
       },
       {
          label: "About",
          value: "about",
-         icon: <CreditScoreOutlined />,
+         icon: <InfoOutlined />,
       },
       {
          label: "Contact",
          value: "contact",
-         icon: <CreditScoreOutlined />,
+         icon: <ContactPageOutlined />,
       },
    ];
    const { value, Tabs } = useTabs({
@@ -29,11 +33,29 @@ const SiteSettings = () => {
 
       data,
    });
+
+   const switchTabs = () => {
+      switch (value) {
+         case "settings_data":
+            return <SiteData />;
+         case "about":
+            return <AboutData />;
+         case "contact":
+            return <ContactData />;
+      }
+   };
    return (
       <Box>
          {Tabs}
-
-         <h1>site settingsdsa</h1>
+         <Box
+            sx={{
+               backgroundColor: "#fff",
+               marginTop: "20px",
+               padding: "20px",
+            }}
+         >
+            {switchTabs()}
+         </Box>
       </Box>
    );
 };
