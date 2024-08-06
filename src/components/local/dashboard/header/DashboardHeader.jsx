@@ -19,7 +19,7 @@ const DashboardHeader = ({ dashboardData }) => {
          <Grid container spacing={2}>
             <Grid item md={6} xs={12}>
                <Box className="headerContainer">
-                  <Box className="mainDiv">
+                  <Box className="mainDivDash">
                      {/* <Typography className="date">
                         {changeDateFormat(
                            new Date(),

@@ -49,6 +49,12 @@ const SiteSettings = () => {
          {Tabs}
          <Box
             sx={{
+               borderBottom: "1px solid #2A7576",
+               marginTop: "-10px",
+            }}
+         ></Box>
+         <Box
+            sx={{
                backgroundColor: "#fff",
                marginTop: "20px",
                padding: "20px",

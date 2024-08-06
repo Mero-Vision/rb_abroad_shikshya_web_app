@@ -102,7 +102,7 @@
    background-color: #fbfbfb;
 }
 
-.mainDiv {
+.mainDivDash {
    padding: 21px 0px;
    display: flex;
    row-gap: 4px;
@@ -110,11 +110,11 @@
    background-color: #edf5ff !important;
 }
 
-.mainDiv .date {
+.mainDivDash .date {
    font-size: 14px;
 }
 
-.mainDiv .title {
+.mainDivDash .title {
    text-align: start;
    width: 100%;
    font-size: 22px;
@@ -123,14 +123,14 @@
    text-transform: capitalize;
 }
 
-.mainDiv .subtitle {
+.mainDivDash .subtitle {
    font-size: 14px;
    color: #6d6f73;
    text-align: start;
    width: 100%;
 }
 
-.mainDiv .startButton {
+.mainDivDash .startButton {
    font-size: 14px;
    width: 100px;
    color: #fff;
@@ -138,7 +138,7 @@
    margin-bottom: 5px;
 }
 
-.mainDiv .warning {
+.mainDivDash .warning {
    font-size: 12px;
    color: #ff6174;
    display: flex;

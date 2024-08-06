@@ -13,7 +13,7 @@ import { memo, useState } from "react";
 import { Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-export const CustomInput = memo(
+export const CustomInputDefault = memo(
    ({
       name,
       control,
@@ -81,7 +81,15 @@ export const CustomInput = memo(
                      alignItems={"center"}
                   >
                      {" "}
-                     <InputLabel className="inputTitle">
+                     <InputLabel
+                        className="inputTitle"
+                        sx={{
+                           fontSize: "12px",
+                           fontWeight: "500",
+                           color: "#525252",
+                           marginBottom: "3px",
+                        }}
+                     >
                         {title}{" "}
                         <span style={{ color: "red" }}>
                            {required && "*"}{" "}
