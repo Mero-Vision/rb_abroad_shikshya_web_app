@@ -1,0 +1,186 @@
+.headerContainer {
+   /* background-image: url(${background}); */
+   /* background-size: cover; */
+   background-color: #edf5ff;
+   padding-inline: 40px 80px;
+   border-radius: 8px;
+   position: relative;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   height: 167px;
+   overflow: hidden;
+   box-shadow: 0px 4px 5px 0px rgba(88, 144, 255, 0.07);
+}
+
+.headerContainerCurrentOccupancy {
+   background-color: #fff;
+   /* padding-inline: 27px 80px; */
+   border-radius: 8px;
+   position: relative;
+   display: flex;
+   align-items: center;
+   height: 167px;
+   padding: 20px 36px 20px 24px;
+   overflow: hidden;
+   box-shadow: 0px 4px 5px 0px rgba(88, 144, 255, 0.07);
+}
+
+.headerContainerCurrentOccupancy .gridTwoBox {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   height: 100%;
+}
+
+.headerContainerCurrentOccupancy .gridTwoTitle {
+   font-size: 16px;
+   color: #000;
+   font-weight: 600;
+}
+
+.headerContainerCurrentOccupancy .gridTwoPercentage {
+   font-size: 40px;
+   color: #4c7ce5;
+   font-weight: 700;
+}
+
+.headerContainerPeakTime {
+   background-color: #fff;
+   border-radius: 8px;
+   overflow: hidden;
+   height: 167px;
+   padding: 20px 20px 20px 24px;
+   box-shadow: 0px 4px 5px 0px rgba(88, 144, 255, 0.07);
+}
+
+.headerContainerPeakTime .buttonActiveLeft {
+   background-color: #e1f5ff;
+   color: #4559bd;
+   border: none;
+   border-radius: 8px 0px 0px 8px;
+   height: 28px !important;
+}
+
+.headerContainerPeakTime .buttonActiveLeft:hover {
+   background-color: #e1f5ff;
+}
+
+.headerContainerPeakTime .buttonInactiveLeft {
+   background-color: #fbfbfb;
+   color: #6c6b63;
+   border: none;
+   border-radius: 8px 0px 0px 8px;
+   height: 28px !important;
+}
+
+.headerContainerPeakTime .buttonInactiveLeft:hover {
+   background-color: #fbfbfb;
+}
+
+.headerContainerPeakTime .buttonActiveRight {
+   background-color: #e1f5ff;
+   color: #4559bd;
+   border: none;
+   border-radius: 0px 8px 8px 0px;
+   height: 28px !important;
+}
+
+.headerContainerPeakTime .buttonActiveRight:hover {
+   background-color: #e1f5ff;
+}
+
+.headerContainerPeakTime .buttonInactiveRight {
+   background-color: #fbfbfb;
+   color: #6c6b63;
+   border: none;
+   border-radius: 0px 8px 8px 0px;
+   height: 28px !important;
+}
+
+.headerContainerPeakTime .buttonInactiveRight:hover {
+   background-color: #fbfbfb;
+}
+
+.mainDiv {
+   padding: 21px 0px;
+   display: flex;
+   row-gap: 4px;
+   flex-direction: column;
+   background-color: #edf5ff !important;
+}
+
+.mainDiv .date {
+   font-size: 14px;
+}
+
+.mainDiv .title {
+   text-align: start;
+   width: 100%;
+   font-size: 22px;
+   font-weight: 600;
+   color: #134fc2;
+   text-transform: capitalize;
+}
+
+.mainDiv .subtitle {
+   font-size: 14px;
+   color: #6d6f73;
+   text-align: start;
+   width: 100%;
+}
+
+.mainDiv .startButton {
+   font-size: 14px;
+   width: 100px;
+   color: #fff;
+   background-color: #4c7ce5;
+   margin-bottom: 5px;
+}
+
+.mainDiv .warning {
+   font-size: 12px;
+   color: #ff6174;
+   display: flex;
+   align-items: center;
+   gap: 5px;
+   text-align: start;
+   width: 100%;
+}
+
+.imageDiv {
+   /* height: 100%; */
+   /* width: 200px; */
+   position: absolute;
+   right: 0;
+   bottom: -8px;
+}
+
+.occupancyGridImageDiv {
+   /* height: 100%; */
+   /* width: 200px; */
+   position: absolute;
+   right: 0;
+   bottom: -7px;
+}
+
+.singleCard {
+   border-radius: 6px;
+   background: #fff;
+   padding: 15px 10px;
+   display: flex;
+   height: 100%;
+   box-shadow: 0px 4px 5px 0px rgba(88, 144, 255, 0.07);
+   flex-direction: column;
+}
+
+.titleDiv .titleDevBox {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+}
+
+.titleDiv .titleDevBox .titleHeader {
+   color: #000;
+   font-size: 16px;
+}
