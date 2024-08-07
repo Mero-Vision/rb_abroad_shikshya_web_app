@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import NotFound from "../components/common/404";
 import Dashboard from "../components/local/dashboard/Dashboard";
+import Blogs from "../components/local/dashboard/pages/cms/Blogs/Blogs";
+import News from "../components/local/dashboard/pages/cms/News/News";
 import SiteSettings from "../components/local/dashboard/pages/siteSettings/SiteSettings";
 import Users from "../components/local/dashboard/pages/users/Users";
 import Login from "../components/local/login";
@@ -18,6 +20,8 @@ const SiteRoutes = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/user-managmement" element={<Users />} />
             <Route path="/site-settings" element={<SiteSettings />} />
+            <Route path="/cms/blogs" element={<Blogs />} />
+            <Route path="/cms/news" element={<News />} />
          </Route>
       </Routes>
    );

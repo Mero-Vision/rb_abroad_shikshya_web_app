@@ -1,5 +1,10 @@
 import { ExpandMore, Menu } from "@mui/icons-material";
-import { Collapse, IconButton, Typography } from "@mui/material";
+import {
+   Collapse,
+   Divider,
+   IconButton,
+   Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -65,14 +70,20 @@ const Drawer = styled(MuiDrawer, {
 export default function Sidebar() {
    const theme = useTheme();
    const [open, setOpen] = useState(true); // Drawer initially open
+   const [expanded, setExpanded] = useState(
+      sessionStorage.getItem("active") || ""
+   );
 
    const handleClick = (item) => {
       if (!open) {
          setOpen(true); // Open the drawer if it's closed
       }
+      setExpanded((prev) =>
+         prev === item?.label ? "" : item?.label
+      );
       sessionStorage.setItem(
          "active",
-         item?.label // Store the active item label
+         expanded === item?.label ? "" : item?.label
       );
    };
 
@@ -91,55 +102,76 @@ export default function Sidebar() {
 
          <Drawer variant="permanent" open={open}>
             <Box className="drawer">
+               <Box sx={{ display: "flex", justifyContent: "end" }}>
+                  <IconButton
+                     onClick={toggleDrawer}
+                     sx={{ margin: "3px" }}
+                  >
+                     <Menu />
+                  </IconButton>
+               </Box>
+               <Divider />
                <DrawerHeader>
-                  <Box className="drawerHeader">
-                     <img src={Logo} alt="Logo" />
-                     <Box>
-                        <Typography
-                           sx={{
-                              lineHeight: 1,
-                              fontSize: "10px",
-                              fontWeight: "500",
-                              marginBottom: "2px",
-                              color: "#808080",
-                           }}
-                        >
-                           Powered By
-                        </Typography>
-                        <Typography
-                           fontWeight={600}
-                           fontSize={"medium"}
-                           sx={{ lineHeight: 1 }}
-                        >
-                           Mero Vision Pvt. Ltd.
-                        </Typography>
-                        <Typography
-                           fontWeight={500}
-                           fontSize={"11px"}
-                        >
-                           Sankhamul, Kathamndu
-                        </Typography>
+                  <Box
+                     className="drawerHeader"
+                     sx={{
+                        columnGap: open ? "7px" : "0px",
+                        width: open ? "auto" : "fit-content",
+                     }}
+                  >
+                     <Box
+                        sx={{
+                           display: "flex",
+                           justifyContent: "center",
+                        }}
+                     >
+                        <img src={Logo} alt="Logo" />
                      </Box>
+                     {open && (
+                        <Box>
+                           <Typography
+                              sx={{
+                                 lineHeight: 1,
+                                 fontSize: "10px",
+                                 fontWeight: "500",
+                                 marginBottom: "2px",
+                                 color: "#808080",
+                              }}
+                           >
+                              Powered By
+                           </Typography>
+                           <Typography
+                              fontWeight={600}
+                              fontSize={"medium"}
+                              sx={{ lineHeight: 1 }}
+                           >
+                              Mero Vision Pvt. Ltd.
+                           </Typography>
+                           <Typography
+                              fontWeight={500}
+                              fontSize={"11px"}
+                           >
+                              Sankhamul, Kathamndu
+                           </Typography>
+                        </Box>
+                     )}
                   </Box>
                </DrawerHeader>
-               <IconButton
-                  onClick={toggleDrawer}
-                  sx={{ margin: "10px" }}
-               >
-                  <Menu />
-               </IconButton>
+
                {SidebarConstants?.map((row) => (
                   <List
                      key={row?.header}
                      subheader={
-                        <Box
-                           sx={{
-                              fontSize: "11px",
-                              padding: "5px 12px",
-                           }}
-                        >
-                           {row?.header}{" "}
-                        </Box>
+                        open && (
+                           <Box
+                              sx={{
+                                 fontSize: "11px",
+                                 padding: "5px 12px",
+                              }}
+                           >
+                              {row?.header}{" "}
+                           </Box>
+                        )
                      }
                      sx={{ mb: "1rem" }}
                   >
@@ -174,24 +206,27 @@ export default function Sidebar() {
                               {({ isActive }) => (
                                  <ListItemButton
                                     className="listItemButton"
-                                    onClick={() =>
-                                       item?.children?.length !== 0
-                                          ? handleClick(item)
-                                          : handleClick()
-                                    }
+                                    onClick={() => handleClick(item)}
                                     style={{
                                        background:
-                                          sessionStorage.getItem(
-                                             "active"
-                                          ) === item?.label &&
+                                          expanded === item?.label &&
                                           "#f6f6f6",
                                     }}
                                  >
                                     <img
                                        style={{
-                                          width: "20px",
-                                          height: "20px",
-                                          marginRight: "15px",
+                                          width: open
+                                             ? "20px"
+                                             : "32px",
+                                          height: open
+                                             ? "20px"
+                                             : "32px",
+                                          marginRight: open
+                                             ? "15px"
+                                             : "",
+                                          padding: open
+                                             ? ""
+                                             : "5.5px 5px 5.5px 2px",
                                        }}
                                        src={
                                           isActive
@@ -209,18 +244,22 @@ export default function Sidebar() {
                                        }
                                        alt=""
                                     />
-                                    <ListItemText
-                                       primary={item?.label}
-                                    />
+                                    {open && (
+                                       <ListItemText
+                                          primary={item?.label}
+                                       />
+                                    )}
                                     {item?.children?.length !== 0 && (
                                        <ExpandMore
                                           sx={{
+                                             fontSize: open
+                                                ? "22px"
+                                                : "18px",
                                              transition:
                                                 "transform 0.3s",
                                              transform:
-                                                sessionStorage.getItem(
-                                                   "active"
-                                                ) === item?.label
+                                                expanded ===
+                                                item?.label
                                                    ? "rotate(-180deg)"
                                                    : "rotate(0deg)",
                                           }}
@@ -229,25 +268,25 @@ export default function Sidebar() {
                                  </ListItemButton>
                               )}
                            </NavLink>
-                           <Collapse
-                              in={
-                                 sessionStorage.getItem("active") ===
-                                 item?.label
-                              }
-                              timeout="auto"
-                              unmountOnExit
-                           >
-                              <Box className="childContainer">
-                                 {item?.children?.map(
-                                    (child, index) => (
-                                       <ChildComponent
-                                          child={child}
-                                          key={index}
-                                       />
-                                    )
-                                 )}
-                              </Box>
-                           </Collapse>
+                           {item?.children?.length > 0 && (
+                              <Collapse
+                                 in={expanded === item?.label}
+                                 timeout="auto"
+                                 unmountOnExit
+                              >
+                                 <Box className="childContainer">
+                                    {item?.children?.map(
+                                       (child, index) => (
+                                          <ChildComponent
+                                             child={child}
+                                             key={index}
+                                             setOpen={setOpen} // Pass setOpen to child
+                                          />
+                                       )
+                                    )}
+                                 </Box>
+                              </Collapse>
+                           )}
                         </ListItem>
                      ))}
                   </List>
@@ -258,8 +297,12 @@ export default function Sidebar() {
    );
 }
 
-const ChildComponent = ({ child }) => {
-   const [hover, setHover] = React.useState(false);
+const ChildComponent = ({ child, setOpen }) => {
+   const [hover, setHover] = useState(false);
+
+   const handleChildClick = () => {
+      setOpen(true); // Ensure the drawer opens when a child is clicked
+   };
 
    return (
       <List
@@ -271,7 +314,7 @@ const ChildComponent = ({ child }) => {
          onMouseOver={() => setHover(true)}
          onMouseOut={() => setHover(false)}
       >
-         <NavLink to={child?.url}>
+         <NavLink to={child?.url} onClick={handleChildClick}>
             {({ isActive }) => (
                <ListItemButton
                   className={[
