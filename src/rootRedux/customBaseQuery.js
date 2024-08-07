@@ -39,11 +39,7 @@ export const customBaseQuery = () => {
    const baseQueryWithReauth = async (args, api, extraOptions) => {
       let result = await baseQuery(args, api, extraOptions);
 
-      if (
-         result?.error ||
-         result.error.status === 401 ||
-         result.error.status === 400
-      ) {
+      if (result?.error && result.error.status === 401) {
          try {
             await refreshAccessToken();
             result = await baseQuery(args, api, extraOptions);

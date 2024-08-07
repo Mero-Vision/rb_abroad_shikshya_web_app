@@ -163,6 +163,10 @@ const LoginForm = () => {
          .catch((rejected) => console.log({ rejected }));
    };
 
+   // useEffect(() => {
+   //    localStorage?.getItem("account_access_token") && navigate("/");
+   // }, [localStorage?.getItem("account_access_token")]);
+
    return (
       <form onSubmit={handleSubmit(onSubmit)}>
          <Box className="mainDiv">

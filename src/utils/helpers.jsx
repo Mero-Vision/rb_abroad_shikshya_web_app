@@ -2,13 +2,9 @@ import moment from "moment";
 import customToaster from "../components/common/CustomToasters/CustomToaster";
 
 export const getToken = () => {
-   const access_token = localStorage.getItem("account_access_token");
-   const refresh_token = localStorage.getItem(
-      "account_refresh_token"
-   );
-   const user = JSON.parse(localStorage.getItem("user") || "{}");
-
-   console.log({ access_token });
+   const access_token = localStorage.getItem("admin_access_token");
+   const refresh_token = localStorage.getItem("admin_refresh_token");
+   const user = JSON.parse(localStorage.getItem("user"));
 
    return {
       access_token,
@@ -52,7 +48,7 @@ export const changeDateFormat = (date, format = "DD/MMM/YYYY") => {
 };
 
 export const getSiteDetail = () => {
-   const access_token = localStorage.getItem("account_access_token");
+   const access_token = localStorage.getItem("admin_access_token");
    const user = localStorage.getItem("user");
 
    return {
