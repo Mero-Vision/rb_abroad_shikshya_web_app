@@ -20,7 +20,7 @@ import Logo from "../../assets/logo.png";
 import { SidebarConstants } from "../../constants/SidebarConstants";
 import "./styles.css";
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const openedMixin = (theme) => ({
    width: drawerWidth,
@@ -246,6 +246,13 @@ export default function Sidebar() {
                                     />
                                     {open && (
                                        <ListItemText
+                                          sx={{
+                                             "& .MuiTypography-root":
+                                                {
+                                                   fontSize: "12px",
+                                                   fontWeight: "500",
+                                                },
+                                          }}
                                           primary={item?.label}
                                        />
                                     )}
@@ -323,6 +330,12 @@ const ChildComponent = ({ child, setOpen }) => {
                   ]}
                >
                   <ListItemText
+                     sx={{
+                        "& .MuiTypography-root": {
+                           fontSize: "13px",
+                           fontWeight: "500",
+                        },
+                     }}
                      primary={child?.label}
                      className="active"
                   />

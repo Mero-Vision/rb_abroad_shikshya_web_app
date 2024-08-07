@@ -2,8 +2,10 @@ import moment from "moment";
 import customToaster from "../components/common/CustomToasters/CustomToaster";
 
 export const getToken = () => {
-   const access_token = localStorage.getItem("admin_access_token");
-   const refresh_token = localStorage.getItem("admin_refresh_token");
+   const access_token = localStorage.getItem("account_access_token");
+   const refresh_token = localStorage.getItem(
+      "account_refresh_token"
+   );
    const user = JSON.parse(localStorage.getItem("user"));
 
    return {
@@ -11,6 +13,10 @@ export const getToken = () => {
       refresh_token,
       user,
    };
+};
+
+export const getCharacterValidationError = (str) => {
+   return `Your password must contain at least 1 ${str} character`;
 };
 
 export const getError = (error) => {

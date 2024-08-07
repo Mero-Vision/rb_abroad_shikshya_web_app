@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, CircularProgress, Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import bg2 from "../../../assets/bg2.png";
 import bgImg from "../../../assets/hisLoginImg.png";
 import imglogBg from "../../../assets/imglogBg.png";
 import LogoLogin from "../../../assets/logo_login.png";
+import { getError } from "../../../utils/helpers";
 import { CustomInput } from "../../common/CustomInputs/CustomInput";
 import "./styles.css";
 
@@ -112,13 +113,17 @@ const LoginForm = () => {
    const [
       login,
       {
-         isError,
+         error,
          isLoading,
          isSuccess,
          error: loginErrors,
          data: successData,
       },
    ] = useLoginMutation();
+
+   useEffect(() => {
+      getError(error);
+   }, [error]);
 
    const handleNavigate = (res) => {
       const checkRole = (roleToFind) => {

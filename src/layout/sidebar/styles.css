@@ -56,6 +56,7 @@
 }
 .activeClass .MuiTypography-root {
    font-weight: 600;
+   font-size: 13px;
 }
 
 .activeChildClass {
@@ -78,6 +79,7 @@
 }
 .activeChildClass .MuiTypography-root {
    font-weight: 600;
+   font-size: 13px;
 }
 
 .listItemButton {

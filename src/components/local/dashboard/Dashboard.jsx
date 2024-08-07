@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
-import DashboardHeader from "./header/DashboardHeader";
 
 const Dashboard = () => {
    const [toggle, setToggle] = useState(false);
@@ -18,7 +17,7 @@ const Dashboard = () => {
             rowGap="28px"
             mb={"2rem"}
          >
-            <DashboardHeader dashboardData={[]} />
+            {/* <DashboardHeader dashboardData={[]} /> */}
          </Box>
       </>
    );

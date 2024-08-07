@@ -42,7 +42,7 @@ export const SidebarConstants = [
          //    children: [],
          // },
          {
-            label: "Cms",
+            label: "CMS",
             url: "/cms",
             icon: UserIcon,
             activeIcon: ActiveUserIcon,
@@ -61,7 +61,7 @@ export const SidebarConstants = [
          },
          {
             label: "Settings",
-            url: "/site-settings",
+            url: "/settings",
             icon: SettingsIcon,
             activeIcon: ActiveSettingsIcon,
             children: [],
