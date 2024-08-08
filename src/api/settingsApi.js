@@ -17,8 +17,8 @@ export const settingsApi = mainApi.injectEndpoints({
             method: "POST",
             body: data,
          }),
-         // invalidatesTags: (result, error) =>
-         //    error ? [] : ["settings"],
+         invalidatesTags: (result, error) =>
+            error ? [] : ["settings"],
       }),
    }),
 });

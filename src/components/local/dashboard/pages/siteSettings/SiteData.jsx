@@ -44,13 +44,85 @@ const SiteData = () => {
       isFetching: settingsFetching,
    } = useGetSettingsQuery();
 
+   console.log("watchSite", watch());
+
    useEffect(() => {
       reset(settingsData);
    }, [settingsData]);
 
+   // const onSubmit = (data) => {
+   //    postSettingsUpdate(data);
+   // };
+
    const onSubmit = (data) => {
-      postSettingsUpdate(data);
+      console.log("Form data before processing:", data);
+
+      const formData = new FormData();
+      let obj = {};
+      const finalData = {
+         ...data,
+         app_logo:
+            data?.app_logo?.[0] instanceof File
+               ? data?.app_logo?.[0]
+               : "",
+         fav_icon:
+            data?.fav_icon?.[0] instanceof File
+               ? data?.fav_icon?.[0]
+               : "",
+      };
+
+      console.log(
+         "Final data before formData processing:",
+         finalData
+      );
+
+      delete finalData?.other_category_details;
+
+      finalData &&
+         Object?.keys(finalData)?.forEach((key) => {
+            formData.append(key, finalData?.[key] ?? "");
+         });
+
+      console.log("FormData content:");
+      for (let pair of formData.entries()) {
+         console.log(pair[0] + ": " + pair[1]);
+      }
+
+      postSettingsUpdate(formData)
+         .unwrap()
+         .then((response) => {
+            console.log("API call successful:", response);
+         })
+         .catch((error) => {
+            console.error("API call error:", error);
+         });
    };
+
+   // const onSubmit = (data) => {
+   //    console.log({ data });
+
+   //    const formData = new FormData();
+   //    let obj = {};
+   //    const finalData = {
+   //       ...data,
+   //       app_logo:
+   //          data?.app_logo?.[0] instanceof File
+   //             ? data?.app_logo?.[0]
+   //             : "",
+   //       // _method: row && "PATCH",
+   //    };
+
+   //    console.log({ row });
+
+   //    delete finalData?.other_category_details;
+
+   //    finalData &&
+   //       Object?.keys(finalData)?.map((key) =>
+   //          formData.append(key, finalData?.[key] ?? "")
+   //       );
+
+   //    postSettingsUpdate(formData);
+   // };
    return (
       <Box
          sx={{
@@ -72,7 +144,7 @@ const SiteData = () => {
             //    </Button>
             // }
          >
-            {settingsLoading || isEditLoading ? (
+            {settingsLoading ? (
                <CustomLoaderLin />
             ) : (
                <Box display={"flex"} columnGap={"45px"} mb={"2rem"}>
@@ -82,7 +154,7 @@ const SiteData = () => {
                         <form onSubmit={handleSubmit(onSubmit)}>
                            <Box>
                               <Grid container spacing={2}>
-                                 <Grid item xs={12}>
+                                 <Grid item xs={6}>
                                     <Box
                                        className="form-container"
                                        sx={{
@@ -94,15 +166,36 @@ const SiteData = () => {
                                     >
                                        <FileUploader
                                           control={control}
-                                          name="category_image"
-                                          title="Image"
+                                          name="app_logo"
+                                          title="App Logo"
                                           setValue={setValue}
                                           errors={errors}
                                           clearErrors={clearErrors}
                                           imageLink={
-                                             watch(
-                                                "category_image"
-                                             ) || ""
+                                             watch("app_logo") || ""
+                                          }
+                                       />
+                                    </Box>
+                                 </Grid>
+                                 <Grid item xs={6}>
+                                    <Box
+                                       className="form-container"
+                                       sx={{
+                                          flexGrow: 1,
+                                          "& .file-input": {
+                                             width: "100%",
+                                          },
+                                       }}
+                                    >
+                                       <FileUploader
+                                          control={control}
+                                          name="fav_icon"
+                                          title="Fav Icon"
+                                          setValue={setValue}
+                                          errors={errors}
+                                          clearErrors={clearErrors}
+                                          imageLink={
+                                             watch("fav_icon") || ""
                                           }
                                        />
                                     </Box>
