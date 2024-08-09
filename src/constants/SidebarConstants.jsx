@@ -184,7 +184,7 @@ import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 export const SidebarConstants = [
    {
-      header: "",
+      header: "Main",
       items: [
          {
             label: "Dashboard",
@@ -228,14 +228,6 @@ export const SidebarConstants = [
                   pageUrl: "/news",
                },
             ],
-         },
-         {
-            label: "Settings",
-            url: "/settings",
-            icon: <SettingsOutlinedIcon />,
-            activeIcon: <SettingsOutlinedIcon />,
-            children: [],
-            permission: "setting-view",
          },
       ],
    },
@@ -300,42 +292,43 @@ export const SidebarConstants = [
    //    ],
    // },
 
-   // {
-   //    header: "Setup",
-   //    items: [
-   // {
-   //    label: "Human resources",
-   //    url: "/human-resources",
-   //    icon: HrIcon,
-   //    activeIcon: ActiveHrIcon,
-   //    children: [
-   //       {
-   //          label: "Positions",
-   //          url: "/human-resources/positions",
-   //          permission: "position-list",
-   //          pageUrl: "/human-resources/positions",
-   //       },
-   //       {
-   //          label: "Departments",
-   //          url: "/human-resources/departments",
-   //          permission: "department-list",
-   //          pageUrl: "/human-resources/departments",
-   //       },
-   //       {
-   //          label: "Employees",
-   //          url: "/human-resources/employees",
-   //          permission: "employee-list",
-   //          pageUrl: "/human-resources/employees",
-   //       },
-   //    ],
-   // },
-   // {
-   //    label: "Reports",
-   //    url: "/dashboard",
-   //    icon: ReportsIcon,
-   //    activeIcon: ActiveReportsIcon,
-   //    children: [],
-   // },
-   //    ],
-   // },
+   {
+      header: "Setup",
+      items: [
+         // {
+         //    label: "Human resources",
+         //    url: "/human-resources",
+         //    icon: HrIcon,
+         //    activeIcon: ActiveHrIcon,
+         //    children: [
+         //       {
+         //          label: "Positions",
+         //          url: "/human-resources/positions",
+         //          permission: "position-list",
+         //          pageUrl: "/human-resources/positions",
+         //       },
+         //       {
+         //          label: "Departments",
+         //          url: "/human-resources/departments",
+         //          permission: "department-list",
+         //          pageUrl: "/human-resources/departments",
+         //       },
+         //       {
+         //          label: "Employees",
+         //          url: "/human-resources/employees",
+         //          permission: "employee-list",
+         //          pageUrl: "/human-resources/employees",
+         //       },
+         //    ],
+         // },
+         {
+            label: "Settings",
+            url: "/settings",
+            icon: <SettingsOutlinedIcon />,
+            activeIcon: <SettingsOutlinedIcon />,
+            children: [],
+            permission: "setting-view",
+         },
+      ],
+   },
 ];

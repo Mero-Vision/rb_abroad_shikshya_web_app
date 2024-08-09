@@ -43,13 +43,11 @@
 }
 
 .nav a {
-   transition: all 0.2s ease-in-out;
    color: #6259ca;
    text-decoration: none;
 }
 
 .activeClass {
-   transition: all 0.2s ease-in-out;
    color: #fff !important;
    border-radius: 50px;
 }

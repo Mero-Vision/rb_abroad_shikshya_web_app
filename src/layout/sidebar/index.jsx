@@ -20,7 +20,7 @@ import Logo from "../../assets/logo.png";
 import { SidebarConstants } from "../../constants/SidebarConstants";
 import "./styles.css";
 
-const drawerWidth = 220;
+const drawerWidth = 270;
 
 const openedMixin = (theme) => ({
    width: drawerWidth,
@@ -117,74 +117,105 @@ export default function Sidebar() {
                            <Menu />
                         </IconButton>
                      </Box>
-                     <Divider />
+                     <Divider sx={{ marginRight: "-10px" }} />
                   </>
                )}
                <DrawerHeader>
                   <Box
-                     className="drawerHeader"
-                     sx={{
-                        columnGap: open ? "7px" : "0px",
-                        width: open ? "auto" : "fit-content",
-                     }}
+                     sx={
+                        open
+                           ? {
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                width: "100%",
+                                paddingLeft: "30px",
+                             }
+                           : { paddingLeft: "10px" }
+                     }
                   >
-                     {!open && (
-                        <Box
-                           sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                           }}
-                        >
-                           <img src={Logo} alt="Logo" />
-                        </Box>
-                     )}
-                     {open && (
+                     <Box
+                        className="drawerHeader"
+                        sx={{
+                           columnGap: open ? "7px" : "0px",
+                           width: open ? "auto" : "fit-content",
+                        }}
+                     >
                         <>
-                           <Box
-                              sx={{
-                                 display: "flex",
-                                 justifyContent: "center",
-                              }}
-                           >
-                              <img src={Logo} alt="Logo" />
-                           </Box>
-
-                           <Box>
-                              <Typography
+                           {!open && (
+                              <Box
                                  sx={{
-                                    lineHeight: 1,
-                                    fontSize: "10px",
-                                    fontWeight: "500",
-                                    marginBottom: "2px",
-                                    color: "#808080",
+                                    display: "flex",
+                                    justifyContent: "center",
                                  }}
                               >
-                                 Powered By
-                              </Typography>
-                              <Typography
-                                 fontWeight={600}
-                                 fontSize={"medium"}
-                                 sx={{ lineHeight: 1 }}
-                              >
-                                 Mero Vision
-                              </Typography>
-                              <Typography
-                                 fontWeight={500}
-                                 fontSize={"11px"}
-                              >
-                                 Kathamndu
-                              </Typography>
-                           </Box>
-                           <IconButton
-                              onClick={toggleDrawer}
-                              sx={{ margin: "3px" }}
-                           >
-                              <Menu />
-                           </IconButton>
+                                 <img src={Logo} alt="Logo" />
+                              </Box>
+                           )}
+                           {open && (
+                              <>
+                                 <Box
+                                    sx={{
+                                       display: "flex",
+                                       justifyContent: "center",
+                                    }}
+                                 >
+                                    <img src={Logo} alt="Logo" />
+                                 </Box>
+
+                                 <Box>
+                                    <Typography
+                                       sx={{
+                                          lineHeight: 1,
+                                          fontSize: "10px",
+                                          fontWeight: "500",
+                                          marginBottom: "2px",
+                                          color: "#808080",
+                                       }}
+                                    >
+                                       Powered By
+                                    </Typography>
+                                    <Typography
+                                       fontWeight={600}
+                                       fontSize={"medium"}
+                                       sx={{ lineHeight: 1 }}
+                                    >
+                                       Mero Vision
+                                    </Typography>
+                                    <Typography
+                                       fontWeight={500}
+                                       fontSize={"11px"}
+                                    >
+                                       Kathamndu
+                                    </Typography>
+                                 </Box>
+                              </>
+                           )}
                         </>
+                     </Box>
+                     {open && (
+                        <IconButton
+                           onClick={toggleDrawer}
+                           sx={{
+                              margin: "3px",
+                              // marginLeft: "30px",
+                           }}
+                        >
+                           <Menu />
+                        </IconButton>
                      )}
                   </Box>
                </DrawerHeader>
+
+               {open && (
+                  <Divider
+                     sx={{
+                        marginRight: "-10px",
+                        marginTop: "-1px",
+                        marginBottom: "7px",
+                     }}
+                  />
+               )}
 
                {SidebarConstants?.map((row) => (
                   <List
@@ -194,14 +225,20 @@ export default function Sidebar() {
                            <Box
                               sx={{
                                  fontSize: "11px",
-                                 padding: "5px 12px",
+                                 padding: "5px 30px",
+                                 marginBottom: "10px",
+                                 color: "#adadad",
+                                 textTransform: "uppercase",
                               }}
                            >
                               {row?.header}
                            </Box>
                         )
                      }
-                     sx={{ mb: "1rem" }}
+                     sx={{
+                        mb: open ? "0.5rem" : "0rem",
+                        paddingBottom: "0px !important",
+                     }}
                   >
                      {row?.items?.map((item) => (
                         <ListItem
@@ -227,7 +264,7 @@ export default function Sidebar() {
                                             )
                                       )
                                        ? "activeClass"
-                                       : {}
+                                       : "inActiveClass"
                                     : "activeClass")
                               }
                            >
@@ -255,10 +292,10 @@ export default function Sidebar() {
                                              ? "flex-start"
                                              : "center",
                                           marginRight: open
-                                             ? "10px"
+                                             ? "8px"
                                              : "",
                                           padding: open
-                                             ? ""
+                                             ? "5px 5px 5px 20px"
                                              : "5.5px 5px 5.5px 2px",
                                        }}
                                     >
@@ -283,7 +320,7 @@ export default function Sidebar() {
                                                         {
                                                            sx: {
                                                               fontSize:
-                                                                 "22px",
+                                                                 "24px",
                                                               padding: 0,
                                                               color: "#fff !important",
                                                            },
@@ -294,7 +331,7 @@ export default function Sidebar() {
                                                         {
                                                            sx: {
                                                               fontSize:
-                                                                 "22px",
+                                                                 "24px",
                                                               padding: 0,
                                                               color: "#6259CA !important",
                                                            },
@@ -305,7 +342,7 @@ export default function Sidebar() {
                                                      {
                                                         sx: {
                                                            fontSize:
-                                                              "22px",
+                                                              "24px",
                                                            padding: 0,
                                                            color: "#fff !important",
                                                         },
@@ -316,7 +353,7 @@ export default function Sidebar() {
                                                   {
                                                      sx: {
                                                         fontSize:
-                                                           "22px",
+                                                           "24px",
                                                         padding: 0,
                                                         color: "#6259CA !important",
                                                      },
@@ -337,20 +374,28 @@ export default function Sidebar() {
                                        />
                                     )}
                                     {item?.children?.length !== 0 && (
-                                       <ExpandMore
+                                       <Box
                                           sx={{
-                                             fontSize: open
-                                                ? "16px"
-                                                : "16px",
-                                             transition:
-                                                "transform 0.3s",
-                                             transform:
-                                                expanded ===
-                                                item?.label
-                                                   ? "rotate(-180deg)"
-                                                   : "rotate(-90deg)",
+                                             display: "flex",
+                                             alignItems: "center",
+                                             paddingRight: "20px",
                                           }}
-                                       />
+                                       >
+                                          <ExpandMore
+                                             sx={{
+                                                fontSize: open
+                                                   ? "16px"
+                                                   : "16px",
+                                                transition:
+                                                   "transform 0.3s",
+                                                transform:
+                                                   expanded ===
+                                                   item?.label
+                                                      ? "rotate(-180deg)"
+                                                      : "rotate(-90deg)",
+                                             }}
+                                          />
+                                       </Box>
                                     )}
                                  </ListItemButton>
                               )}
