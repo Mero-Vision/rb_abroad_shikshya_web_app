@@ -31,6 +31,7 @@ const Navbar = () => {
                {paths?.length
                   ? paths?.slice(-1)?.toString()?.replaceAll("-", " ")
                   : "Dashboard"}
+               dsa
             </Box>
             <Box className="breadcrumbs">
                <CustomBreadcrumbs data={{ color: "#fff" }} />
@@ -38,7 +39,6 @@ const Navbar = () => {
          </Box>
 
          <Box className="right">
-            {/* <AccountMenu IsCompany={IsCompany} /> */}
             <AccountMenu />
          </Box>
       </Box>

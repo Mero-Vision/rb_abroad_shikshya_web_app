@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { auth, useLoginMutation } from "../../../api/authApi";
 
-import bgImg from "../../../assets/hisLoginImg.png";
+import bgImg from "../../../assets/hisLoginImg.svg";
 import LogoLogin from "../../../assets/logo_login.png";
 import { getError } from "../../../utils/helpers";
 import { CustomInputDefault } from "../../common/CustomInputs/CustomInputDefault";
@@ -239,6 +239,7 @@ const LoginForm = () => {
                         display: "flex",
                         flexDirection: "column",
                         textAlign: "center",
+                        alignItems: "center",
                      }}
                   >
                      <Box
@@ -259,7 +260,6 @@ const LoginForm = () => {
                            width: "fit-content",
                            cursor: "pointer",
                            textAlign: "center",
-                           width: "100%",
                            "&:hover": {
                               textDecoration: "underline",
                            },
@@ -275,7 +275,6 @@ const LoginForm = () => {
                            width: "fit-content",
                            cursor: "pointer",
                            textAlign: "center",
-                           width: "100%",
 
                            "&:hover": {
                               textDecoration: "underline",

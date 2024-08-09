@@ -30,6 +30,9 @@ const MainDashboardLayout = () => {
             <Box sx={{ background: "#F9F9FB", width: "100%" }}>
                <Box
                   sx={{
+                     borderLeft: "1px solid #F9F9FB",
+
+                     backgroundColor: "#fff",
                      paddingInline: "46px",
                   }}
                >
