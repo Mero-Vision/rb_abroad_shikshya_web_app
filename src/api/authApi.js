@@ -6,6 +6,7 @@ const localArray = [
    "account_access_token",
    "account_refresh_token",
    "user",
+   "company",
 ];
 export const authSlice = createSlice({
    name: "auth",

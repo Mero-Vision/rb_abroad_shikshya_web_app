@@ -30,15 +30,15 @@ const useStyles = makeStyles((theme) => ({
       },
    },
    activeClass: {
-      color: "#4559BD !important",
+      color: "#6259CA !important",
       "& > *": {
-         background: "#E1F5FF !important",
+         background: "#e5e3ff !important",
       },
       "& .MuiTypography-root": {
          fontWeight: "600 !important",
       },
       "& svg": {
-         color: "#4559BD !important",
+         color: "#6259CA !important",
       },
    },
    activeChildClass: {
@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
       paddingInline: "12px !important",
       paddingBlock: "8px !important",
       fontSize: "13px",
+      borderRadius: "8px !important",
    },
    listItemButtonChild: {
       justifyContent: "initial",

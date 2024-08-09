@@ -19,12 +19,12 @@ const useStyles = makeStyles((theme) => ({
          padding: "10px",
       },
       "& .Mui-selected": {
-         // color: "#2A7576 !important",
+         // color: "#6259CA !important",
          minHeight: "0 !important",
          fontWeight: 600,
       },
       "& .MuiTabs-indicator": {
-         // background: "#2A7576 !important",
+         // background: "#6259CA !important",
          margin: 0,
          height: "3px",
       },

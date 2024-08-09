@@ -1,4 +1,8 @@
-.drawer {
+.drawerClose {
+   /* padding-inline: 10px; */
+   padding-right: 5px;
+}
+.drawerOpen {
    /* padding-inline: 10px; */
    padding-right: 10px;
 }
@@ -107,7 +111,7 @@
    width: max-content;
    padding-top: 6px;
    border-left: 1px solid #e5e5eb;
-   margin-inline: 16px;
+   margin-inline: 42px;
    padding-inline: 8px;
 }
 .childContainer button {

@@ -1,7 +1,7 @@
 import { mainApi } from "./mainApi";
 
 export const settingsApi = mainApi.injectEndpoints({
-   tagTypes: ["settings"],
+   tagTypes: ["settings", "countries"],
    endpoints: (builder) => ({
       getSettings: builder.query({
          query: (params) => ({
@@ -20,8 +20,21 @@ export const settingsApi = mainApi.injectEndpoints({
          invalidatesTags: (result, error) =>
             error ? [] : ["settings"],
       }),
+
+      // master data
+
+      getCountries: builder.query({
+         query: (params) => ({
+            url: `/api/super-admin/master-data/country-list`,
+            params,
+         }),
+         providesTags: ["countries"],
+      }),
    }),
 });
 
-export const { useGetSettingsQuery, usePostSettingsUpdateMutation } =
-   settingsApi;
+export const {
+   useGetSettingsQuery,
+   usePostSettingsUpdateMutation,
+   useGetCountriesQuery,
+} = settingsApi;

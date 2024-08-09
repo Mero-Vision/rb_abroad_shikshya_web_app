@@ -1,11 +1,12 @@
 import { EditOutlined } from "@mui/icons-material";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../../../../assets/logo.png";
 
+import { useGetCompanySingleQuery } from "../../../../../../api/companyApi";
+import { getSiteDetail } from "../../../../../../utils/helpers";
 import CustomLoaderLin from "../../../../../common/CustomLoader/CustomLoaderLin";
 import CustomPaper from "../../../../../common/CustomPaper/CustomPaper";
 import styles from "./styles";
@@ -14,7 +15,8 @@ const GeneralSettings = () => {
    const classes = styles();
    const navigate = useNavigate();
    const [changed, setChanged] = useState(false);
-   const userData = JSON.parse(localStorage?.getItem("user"));
+
+   const companyInfo = getSiteDetail()?.companyData;
 
    const {
       control,
@@ -24,88 +26,67 @@ const GeneralSettings = () => {
    } = useForm({
       defaultValues: {},
    });
-   // const [postSettings, { error, isSuccess, successData }] =
-   //    usePostSettingsMutation();
 
-   // const {
-   //    data: businessData,
-   //    isFetching: businessFetching,
-   //    isSuccess: businessSuccess,
-   // } = useGetSingleUserInfoQuery();
-   // console.log({ businessData });
-   const { company } = useSelector((state) => state?.utils);
-   const singleData = useMemo(() => company, [company]);
+   const {
+      data: companyData,
+      isFetching: companyFetching,
+      isSuccess: companySuccess,
+   } = useGetCompanySingleQuery(companyInfo?.id, {
+      skip: !companyInfo?.id,
+   });
    const data = [
       {
+         title: "Established Date",
+         value: companyData?.data?.established_date || "-",
+      },
+      {
+         title: "Registration Number",
+         value: companyData?.data?.registration_number || "-",
+      },
+      {
          title: "Email address",
-         value: "-",
+         value: companyData?.data?.email || "-",
       },
       {
-         title: "Contact No.",
-         value: "-",
+         title: "Mobile No.",
+         value: companyData?.data?.mobile_no || "-",
       },
       {
-         title: "Address",
-         value: "-",
+         title: "Phone No.",
+         value: companyData?.data?.phone_no || "-",
       },
       {
-         title: "VAT/PAN No.",
-         value: "-",
+         title: "Country",
+         value: companyData?.data?.country || "-",
       },
       {
-         title: "Registration No.",
-         value: "-",
+         title: "Province",
+         value: companyData?.data?.province || "-",
       },
       {
-         title: "Start Date",
-         value: "-",
+         title: "District",
+         value: companyData?.data?.district || "-",
       },
-      // {
-      //    title: "Bill Heading",
-      //    value: businessData?.data?.bill_heading ?? "-",
-      // },
-      // {
-      //    title: "Bill Remarks",
-      //    value: businessData?.data?.bill_remarks ?? "-",
-      // },
-      // {
-      //    title: "Is Tax",
-      //    value: businessData?.data?.is_tax ?? "-",
-      // },
+      {
+         title: "Municipality",
+         value: companyData?.data?.municipality || "-",
+      },
+      {
+         title: "Street Address",
+         value: companyData?.data?.street_address || "-",
+      },
+
+      {
+         title: "Vat No",
+         value: companyData?.data?.vat_no || "-",
+      },
+
+      {
+         title: "Website",
+         value: companyData?.data?.website || "-",
+      },
    ];
 
-   // const billData = [
-   //    {
-   //       title: "Bill Heading",
-   //       value: businessData?.data?.company?.bill_heading ?? "-",
-   //    },
-   //    {
-   //       title: "Bill Remarks",
-   //       value: businessData?.data?.company?.bill_remarks ?? "-",
-   //    },
-   //    {
-   //       title: "Is Tax",
-   //       value: businessData?.data?.company?.is_tax ?? "-",
-   //    },
-   // ];
-
-   // useEffect(() => {
-   //    const rate_type = watch("rate_type");
-   //    changed && postSettings({ rate_type });
-   // }, [watch("rate_type"), changed]);
-   // useEffect(() => {
-   //    if (isSuccess) {
-   //       customToaster({
-   //          type: "success",
-   //          message: successData?.message || "Success",
-   //       });
-   //    }
-   // }, [isSuccess]);
-   // useEffect(() => {
-   //    getError(error);
-   // }, [error]);
-
-   const businessFetching = false;
    return (
       <Box
          sx={{
@@ -116,32 +97,39 @@ const GeneralSettings = () => {
       >
          {" "}
          <CustomPaper
-            modalTitle={"General Settings"}
+            modalTitle={"Company Settings"}
             button={
                <Button
-                  startIcon={<EditOutlined />}
+                  sx={{
+                     border: "1px solid #6259CA",
+                     color: "#6259CA",
+                     fontSize: "13px !important",
+                     fontWeight: "500 !important",
+                     textTransform: "capitalize",
+                     // padding: "6px 8px !important",
+                  }}
+                  startIcon={
+                     <EditOutlined
+                        sx={{ fontSize: "18px !important" }}
+                     />
+                  }
                   variant="outlinedButton"
                   onClick={() => navigate("edit")}
                >
-                  Edit Profile
+                  Edit Company
                </Button>
             }
          >
-            {businessFetching ? (
+            {companyFetching ? (
                <CustomLoaderLin />
             ) : (
                <Box display={"flex"} columnGap={"45px"} mb={"2rem"}>
                   <Box className={classes.profilePicture}>
                      <Avatar
-                        src={Logo}
-                        alt={"name"}
-                        // src={
-                        //    businessData?.data?.company
-                        //       ?.company_image || Logo
-                        // }
-                        // alt={
-                        //    businessData?.data?.company?.business_name
-                        // }
+                        // src={Logo}
+                        // alt={"name"}
+                        src={companyData?.data?.company_logo || Logo}
+                        alt={companyData?.data?.company_name}
                      />
                   </Box>
                   <Box>
@@ -155,17 +143,17 @@ const GeneralSettings = () => {
                                     color: "#201F37",
                                  }}
                               >
-                                 {"-"}{" "}
+                                 {companyData?.data?.company_name ||
+                                    "-"}{" "}
                               </Typography>
-                              <Typography
+                              {/* <Typography
                                  sx={{
                                     fontSize: "14px",
                                     fontWeight: 400,
                                     color: "#4C4B63",
                                  }}
                               >
-                                 {"-"}{" "}
-                              </Typography>
+                              </Typography> */}
                            </Box>
                         </Grid>
                         {data?.map((item) => (

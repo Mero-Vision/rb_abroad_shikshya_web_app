@@ -91,6 +91,12 @@ export default function Sidebar() {
       setOpen(!open);
    };
 
+   React.useEffect(() => {
+      if (!open) {
+         setExpanded(""); // Close all collapses when the drawer is closed
+      }
+   }, [open]);
+
    return (
       <Box
          sx={{
@@ -101,18 +107,18 @@ export default function Sidebar() {
          <CssBaseline />
 
          <Drawer variant="permanent" open={open}>
-            <Box className="drawer">
+            <Box className={open ? "drawerOpen" : "drawerClose"}>
                {!open && (
                   <>
                      <Box
                         sx={{
                            display: "flex",
-                           justifyContent: "end",
+                           justifyContent: "center",
                         }}
                      >
                         <IconButton
                            onClick={toggleDrawer}
-                           sx={{ margin: "3px" }}
+                           sx={{ margin: "3px", marginLeft: "5px" }}
                         >
                            <Menu />
                         </IconButton>
@@ -131,7 +137,7 @@ export default function Sidebar() {
                                 width: "100%",
                                 paddingLeft: "30px",
                              }
-                           : { paddingLeft: "10px" }
+                           : { paddingLeft: "3px" }
                      }
                   >
                      <Box
@@ -211,7 +217,7 @@ export default function Sidebar() {
                   <Divider
                      sx={{
                         marginRight: "-10px",
-                        marginTop: "-1px",
+                        marginTop: "8px",
                         marginBottom: "7px",
                      }}
                   />
@@ -276,6 +282,12 @@ export default function Sidebar() {
                                        background:
                                           expanded === item?.label &&
                                           "#f6f6f6",
+                                       // paddingInline: open
+                                       //    ? "5px 10px"
+                                       //    : "5px 5px 10px",
+                                       // padding: open
+                                       //    ? "5px 10px"
+                                       //    : "5px  0px 5px 15px",
                                     }}
                                  >
                                     <Box
@@ -296,7 +308,7 @@ export default function Sidebar() {
                                              : "",
                                           padding: open
                                              ? "5px 5px 5px 20px"
-                                             : "5.5px 5px 5.5px 2px",
+                                             : "5.5px 0px 5.5px 12px",
                                        }}
                                     >
                                        <IconButton
@@ -383,6 +395,7 @@ export default function Sidebar() {
                                        >
                                           <ExpandMore
                                              sx={{
+                                                // width: "fit-content",
                                                 fontSize: open
                                                    ? "16px"
                                                    : "16px",

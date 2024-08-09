@@ -60,31 +60,20 @@ const useTabs = ({
                   onChange={handleChange}
                   textColor="secondary"
                   indicatorColor="secondary"
-                  sx={
-                     pos
-                        ? {
-                             "& .MuiTab-root": {
-                                color: "#FF9129 !important",
-                             },
-                             "& .Mui-selected": {
-                                color: "#FF9129 !important",
-                             },
-                             "& .MuiTabs-indicator": {
-                                background: "#FF9129 !important",
-                             },
-                          }
-                        : {
-                             "& .MuiTab-root": {
-                                color: "#6C6B80 !important",
-                             },
-                             "& .Mui-selected": {
-                                color: "#2A7576 !important",
-                             },
-                             "& .MuiTabs-indicator": {
-                                background: "#2A7576 !important",
-                             },
-                          }
-                  }
+                  sx={{
+                     "& .MuiTab-root": {
+                        color: "#6C6B80 !important",
+                     },
+                     "& .Mui-selected": {
+                        color: "#6259CA !important",
+                     },
+                     "& .MuiTabs-indicator": {
+                        background: "#6259CA !important",
+                     },
+                     "& .MuiSvgIcon-root": {
+                        fontSize: "17px !important",
+                     },
+                  }}
                >
                   {data?.map((item, index) => (
                      <Tab

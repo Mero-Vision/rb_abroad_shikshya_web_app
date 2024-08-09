@@ -31,6 +31,12 @@ const settingsArray = [
       icon: <SettingsOutlined />,
       permission: "printer-list",
    },
+   {
+      label: "Master Data",
+      url: "/settings/master-data",
+      icon: <SettingsOutlined />,
+      permission: "printer-list",
+   },
 ];
 const SettingsRoutes = () => {
    const classes = styles();
@@ -59,7 +65,7 @@ const SettingsRoutes = () => {
                         <ListItemButton
                            className={classes.listItemButton}
                            sx={{
-                              padding: "2px 10px !important",
+                              padding: "5px 10px !important",
                            }}
                         >
                            <ListItemIcon

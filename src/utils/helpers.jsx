@@ -7,11 +7,13 @@ export const getToken = () => {
       "account_refresh_token"
    );
    const user = JSON.parse(localStorage.getItem("user"));
+   const company = JSON.parse(localStorage.getItem("company"));
 
    return {
       access_token,
       refresh_token,
       user,
+      company,
    };
 };
 
@@ -48,6 +50,15 @@ export const isPwa = () => {
    );
 };
 
+export const replaceFunction = (
+   string,
+   valueToReplace = " ",
+   newValue = "-"
+) => {
+   const data = string?.replaceAll(valueToReplace, newValue);
+   return data;
+};
+
 export const changeDateFormat = (date, format = "DD/MMM/YYYY") => {
    const changedDate = moment(date).format(format);
    return changedDate;
@@ -56,9 +67,11 @@ export const changeDateFormat = (date, format = "DD/MMM/YYYY") => {
 export const getSiteDetail = () => {
    const access_token = localStorage.getItem("admin_access_token");
    const user = JSON.parse(localStorage.getItem("user"));
+   const company = JSON.parse(localStorage.getItem("company"));
 
    return {
       token: access_token,
       userData: user,
+      companyData: company,
    };
 };

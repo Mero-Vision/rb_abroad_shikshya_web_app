@@ -6,6 +6,7 @@ import News from "../components/local/dashboard/pages/cms/News/News";
 import Settings from "../components/local/dashboard/pages/settings/Settings";
 import GeneralSettings from "../components/local/dashboard/pages/settings/generalSettings/GeneralSettings";
 import GeneralSettingsEdit from "../components/local/dashboard/pages/settings/generalSettings/GeneralSettingsEdit";
+import MasterData from "../components/local/dashboard/pages/settings/masterData/MasterData";
 import UserProfile from "../components/local/dashboard/pages/settings/userProfile/UserProfile";
 import UserProfileEdit from "../components/local/dashboard/pages/settings/userProfile/UserProfileEdit";
 import SiteData from "../components/local/dashboard/pages/siteSettings/SiteData";
@@ -45,6 +46,7 @@ const SiteRoutes = () => {
                   element={<UserProfileEdit />}
                />
                <Route path="site-data" element={<SiteData />} />
+               <Route path="master-data" element={<MasterData />} />
             </Route>{" "}
             <Route path="/cms/blogs" element={<Blogs />} />
             <Route path="/cms/news" element={<News />} />

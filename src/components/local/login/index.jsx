@@ -102,6 +102,7 @@ const LoginForm = () => {
             const auth_token = res?.data?.token;
             const refresh_token = res?.data?.refresh_token;
             const user = res?.data?.user;
+            const company = res?.data?.company;
 
             localStorage.setItem(
                "account_access_token",
@@ -112,6 +113,10 @@ const LoginForm = () => {
                refresh_token || ""
             );
             localStorage.setItem("user", JSON.stringify(user) || "");
+            localStorage.setItem(
+               "company",
+               JSON.stringify(company) || ""
+            );
 
             dispatch(auth(res?.data));
             setFullfiledData(res?.data);

@@ -129,8 +129,8 @@ const UserProfile = () => {
             button={
                <Button
                   sx={{
-                     border: "1px solid #4C7CE5",
-                     color: "#4C7CE5",
+                     border: "1px solid #6259CA",
+                     color: "#6259CA",
                      fontSize: "13px !important",
                      fontWeight: "500 !important",
                      textTransform: "capitalize",
