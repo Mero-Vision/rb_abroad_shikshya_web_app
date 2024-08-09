@@ -1,5 +1,6 @@
 .drawer {
-   padding-inline: 10px;
+   /* padding-inline: 10px; */
+   padding-right: 10px;
 }
 
 .companyName {
@@ -42,17 +43,19 @@
 }
 
 .nav a {
-   transition: all 1s ease-in-out;
-   color: #000;
+   transition: all 0.2s ease-in-out;
+   color: #6259ca;
    text-decoration: none;
 }
 
 .activeClass {
-   transition: all 1s ease-in-out;
-   color: #4559bd !important;
+   transition: all 0.2s ease-in-out;
+   color: #fff !important;
+   border-radius: 50px;
 }
 .activeClass > * {
-   background: #e1f5ff !important;
+   background: #6259ca !important;
+   border-radius: 0px 50px 50px 0px !important;
 }
 .activeClass .MuiTypography-root {
    font-weight: 600;
