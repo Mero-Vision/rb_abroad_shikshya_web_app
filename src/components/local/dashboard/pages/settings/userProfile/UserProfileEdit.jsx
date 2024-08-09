@@ -255,13 +255,20 @@
 
 // export default UserProfileEdit;
 
-import { Box, Grid } from "@mui/material";
-import React, { useMemo } from "react";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
+import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import {
+   useGetSingleUserQuery,
+   usePostUserUpdateMutation,
+} from "../../../../../../api/userApi";
+import Logo from "../../../../../../assets/logo.png";
+import { getSiteDetail } from "../../../../../../utils/helpers";
 import CustomBackButton from "../../../../../common/CustomButton/CustomBackButton";
 import CustomButton from "../../../../../common/CustomButton/CustomButton";
-import { CustomInput } from "../../../../../common/CustomInputs/CustomInput";
+import CustomFileUpload from "../../../../../common/CustomFileUpload/CustomFileUpload";
+import { CustomInputDefault } from "../../../../../common/CustomInputs/CustomInputDefault";
 import CustomPaper from "../../../../../common/CustomPaper/CustomPaper";
 import styles from "./styles";
 
@@ -271,44 +278,29 @@ const data = [
       placeholder: "",
       name: "name",
    },
-
-   // {
-   //    title: "Email address",
-   //    placeholder: "",
-   //    name: "email",
-   // },
-   {
-      title: "Mobile Number",
-      placeholder: "",
-      name: "mobile_no",
-   },
-   {
-      title: "Address",
-      placeholder: "",
-      name: "location",
-   },
 ];
 
 const UserProfileEdit = () => {
    const classes = styles();
    const { userDetails } = useSelector((state) => state?.utils);
    const singleData = useMemo(() => userDetails, [userDetails]);
+   const userData = getSiteDetail()?.userData;
 
-   // const [
-   //    editCompany,
-   //    {
-   //       error: editError,
-   //       isLoading: isEditLoading,
-   //       isSuccess: isEditSuccess,
-   //       data: editSuccessData,
-   //    },
-   // ] = useUpdateSingleUserMutation();
+   const [
+      postUserUpdate,
+      {
+         error: editError,
+         isLoading: isEditLoading,
+         isSuccess: isEditSuccess,
+         data: editSuccessData,
+      },
+   ] = usePostUserUpdateMutation();
 
-   // const {
-   //    data: singleUserInfo,
-   //    isLoading: querySingleUserLoading,
-   //    isFetching: userSingleDataFetching,
-   // } = useGetSingleUserInfoQuery();
+   const {
+      data: singleUserInfo,
+      isLoading: querySingleUserLoading,
+      isFetching,
+   } = useGetSingleUserQuery(userData?.id);
 
    const {
       control,
@@ -316,39 +308,62 @@ const UserProfileEdit = () => {
       reset,
       handleSubmit,
       watch,
+      setValue,
    } = useForm();
 
    console.log("watch------>>asa.,d>", watch());
 
    const onSubmit = (data) => {
-      console.log("jsajdkljad", { data });
-      // const formData = new FormData();
-      // const finalData = {
-      //    // ...data,
-      //    profile_image: data?.profile_image?.[0] || "",
-      //    name: data?.name,
-      //    mobile_no: data?.mobile_no,
-      //    location: data?.location,
-      //    id: singleUserInfo?.data?.id,
+      console.log("Form Data Submitted:", data);
+      const formData = new FormData();
 
-      //    _method: "PATCH",
-      // };
-      // finalData &&
-      //    Object?.keys(finalData)?.map((key) =>
-      //       formData.append(key, finalData?.[key] || "")
-      //    );
+      const finalData = {
+         profile_image: data?.profile_image?.[0] || "",
+         name: data?.name,
+         _method: "PUT",
+      };
 
-      // const payload = {
-      //    ...finalData,
-      //    id: singleUserInfo?.data?.id,
-      // };
+      Object.keys(finalData).forEach((key) => {
+         formData.append(key, finalData[key] || "");
+      });
 
-      // editCompany(formData);
+      formData.append("id", singleUserInfo?.data?.id);
+
+      // Assuming postUserUpdate is your function to handle the submission
+      postUserUpdate({
+         data: formData,
+         id: singleUserInfo?.data?.id,
+      });
    };
 
-   // useEffect(() => {
-   //    singleUserInfo?.data && reset(singleUserInfo?.data);
-   // }, [singleUserInfo?.data]);
+   // const onSubmit = (data) => {
+   //    console.log("jsajdkljad", { data });
+   //    const formData = new FormData();
+   //    const finalData = {
+   //       // ...data,
+   //       profile_image: data?.profile_image?.[0] || "",
+   //       name: data?.name,
+
+   //       _method: "PATCH",
+   //    };
+   //    finalData &&
+   //       Object?.keys(finalData)?.map((key) =>
+   //          formData.append(key, finalData?.[key] || "")
+   //       );
+
+   //    const payload = {
+   //       ...finalData,
+   //       id: singleUserInfo?.data?.id,
+   //    };
+
+   //    postUserUpdate(formData);
+   // };
+
+   useEffect(() => {
+      if (singleUserInfo?.data) {
+         setValue("name", singleUserInfo?.data?.name);
+      }
+   }, [singleUserInfo?.data, setValue]);
 
    // const FileComponent = () => {
    //    const companyImage = watch()?.profile_image?.[0];
@@ -368,6 +383,31 @@ const UserProfileEdit = () => {
 
    //    return <Avatar src={avatarSrc} alt="Company Logo" />;
    // };
+   const FileComponent = () => {
+      const companyImage = watch("profile_image")?.[0];
+      const fallbackImage =
+         singleUserInfo?.data?.profile_image || Logo;
+      const [avatarSrc, setAvatarSrc] = React.useState(fallbackImage);
+
+      useEffect(() => {
+         let objectUrl;
+
+         if (companyImage && companyImage instanceof File) {
+            objectUrl = URL.createObjectURL(companyImage);
+            setAvatarSrc(objectUrl);
+
+            // Clean up the URL.createObjectURL when the component unmounts or when companyImage changes
+            return () => {
+               URL.revokeObjectURL(objectUrl);
+            };
+         } else {
+            setAvatarSrc(fallbackImage);
+         }
+      }, [companyImage, fallbackImage]);
+
+      return <Avatar src={avatarSrc} alt="Company Logo" />;
+   };
+
    return (
       <Box>
          {" "}
@@ -380,7 +420,7 @@ const UserProfileEdit = () => {
                      alignItems={"center"}
                      rowGap={"5px"}
                   >
-                     {/* <Box
+                     <Box
                         className={classes.profilePicture}
                         sx={{
                            transition: "100ms all ease-in-out",
@@ -413,7 +453,7 @@ const UserProfileEdit = () => {
                               Click to Upload
                            </Typography>
                         }
-                     /> */}
+                     />
                   </Box>
                   <Box width="470px">
                      <Grid container spacing={4}>
@@ -449,7 +489,7 @@ const SingleItem = ({ data, control, errors }) => {
    return (
       <Grid item xs={xs || 12}>
          <Box>
-            <CustomInput
+            <CustomInputDefault
                name={name}
                title={title}
                placeholder={placeholder}

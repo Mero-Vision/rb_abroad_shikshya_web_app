@@ -102,15 +102,24 @@ export default function Sidebar() {
 
          <Drawer variant="permanent" open={open}>
             <Box className="drawer">
-               <Box sx={{ display: "flex", justifyContent: "end" }}>
-                  <IconButton
-                     onClick={toggleDrawer}
-                     sx={{ margin: "3px" }}
-                  >
-                     <Menu />
-                  </IconButton>
-               </Box>
-               <Divider />
+               {!open && (
+                  <>
+                     <Box
+                        sx={{
+                           display: "flex",
+                           justifyContent: "end",
+                        }}
+                     >
+                        <IconButton
+                           onClick={toggleDrawer}
+                           sx={{ margin: "3px" }}
+                        >
+                           <Menu />
+                        </IconButton>
+                     </Box>
+                     <Divider />
+                  </>
+               )}
                <DrawerHeader>
                   <Box
                      className="drawerHeader"
@@ -119,41 +128,60 @@ export default function Sidebar() {
                         width: open ? "auto" : "fit-content",
                      }}
                   >
-                     <Box
-                        sx={{
-                           display: "flex",
-                           justifyContent: "center",
-                        }}
-                     >
-                        <img src={Logo} alt="Logo" />
-                     </Box>
+                     {!open && (
+                        <Box
+                           sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                           }}
+                        >
+                           <img src={Logo} alt="Logo" />
+                        </Box>
+                     )}
                      {open && (
-                        <Box>
-                           <Typography
+                        <>
+                           <Box
                               sx={{
-                                 lineHeight: 1,
-                                 fontSize: "10px",
-                                 fontWeight: "500",
-                                 marginBottom: "2px",
-                                 color: "#808080",
+                                 display: "flex",
+                                 justifyContent: "center",
                               }}
                            >
-                              Powered By
-                           </Typography>
-                           <Typography
-                              fontWeight={600}
-                              fontSize={"medium"}
-                              sx={{ lineHeight: 1 }}
+                              <img src={Logo} alt="Logo" />
+                           </Box>
+
+                           <Box>
+                              <Typography
+                                 sx={{
+                                    lineHeight: 1,
+                                    fontSize: "10px",
+                                    fontWeight: "500",
+                                    marginBottom: "2px",
+                                    color: "#808080",
+                                 }}
+                              >
+                                 Powered By
+                              </Typography>
+                              <Typography
+                                 fontWeight={600}
+                                 fontSize={"medium"}
+                                 sx={{ lineHeight: 1 }}
+                              >
+                                 Mero Vision
+                              </Typography>
+                              <Typography
+                                 fontWeight={500}
+                                 fontSize={"11px"}
+                              >
+                                 Kathamndu
+                              </Typography>
+                           </Box>
+                           <IconButton
+                              onClick={toggleDrawer}
+                              sx={{ margin: "3px" }}
                            >
-                              Mero Vision Pvt. Ltd.
-                           </Typography>
-                           <Typography
-                              fontWeight={500}
-                              fontSize={"11px"}
-                           >
-                              Sankhamul, Kathamndu
-                           </Typography>
-                        </Box>
+                              <Menu />
+                           </IconButton>
+                        </>
                      )}
                   </Box>
                </DrawerHeader>

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import styles from "./styles";
 // import ClearIcon from "@mui/icons-material/Clear";
-import { Add } from "@mui/icons-material";
+import { Cloud } from "@mui/icons-material";
 import { useDropzone } from "react-dropzone";
 
 const FileUploader = ({
@@ -83,7 +83,14 @@ const FileUploader = ({
                            mb: "5px",
                         }}
                      >
-                        <InputLabel className={classes.labels}>
+                        <InputLabel
+                           className={classes.labels}
+                           sx={{
+                              color: "#525252",
+                              fontSize: "12px",
+                              fontWeight: "500",
+                           }}
+                        >
                            {title}
                         </InputLabel>
                         <InputLabel style={{ color: "red" }}>
@@ -114,7 +121,7 @@ const FileUploader = ({
                         </Tooltip>
                      ) : (
                         <>
-                           <Add />
+                           <Cloud />
                            <div className="title">
                               Drag and drop to upload
                            </div>

@@ -1,20 +1,25 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, CircularProgress, Grid } from "@mui/material";
+import {
+   Box,
+   Button,
+   CircularProgress,
+   Grid,
+   Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { auth, useLoginMutation } from "../../../api/authApi";
-// import LoginImage from "../../../assets/login/Side.svg";
-// import Right from "../../../assets/login/right.svg";
-import bg2 from "../../../assets/bg2.png";
+
 import bgImg from "../../../assets/hisLoginImg.png";
-import imglogBg from "../../../assets/imglogBg.png";
 import LogoLogin from "../../../assets/logo_login.png";
 import { getError } from "../../../utils/helpers";
-import { CustomInput } from "../../common/CustomInputs/CustomInput";
+import { CustomInputDefault } from "../../common/CustomInputs/CustomInputDefault";
 import "./styles.css";
+
+import fbIcon from "../../../assets/social/fb.png";
 
 const validationSchema = yup.object().shape({
    email: yup.string().required("Email is required"),
@@ -22,22 +27,13 @@ const validationSchema = yup.object().shape({
 });
 
 const Login = () => {
-   const navigate = useNavigate();
    const isMobile = window.innerWidth < 900; //Add the width you want to check for here (now 768px)
 
    return (
       <>
          <Box sx={{ position: "relative" }}>
             <Grid container spacing={0}>
-               <Grid
-                  item
-                  md={5.5}
-                  sm={12}
-                  sx={{ width: "100% !important" }}
-               >
-                  <LoginForm />
-               </Grid>
-               <Grid item md={6.5} sm={12} sx={{ width: "100%" }}>
+               <Grid item md={0} lg={6} sx={{ width: "100%" }}>
                   <Box className="grid2Login">
                      <Box className="grid2LoginWrap">
                         <Box className="grid2LoginWrapImg">
@@ -51,49 +47,17 @@ const Login = () => {
                            />
                         </Box>
                      </Box>
-                     <Box className="grid2AbsImg">
-                        <img
-                           src={imglogBg}
-                           alt=""
-                           style={{
-                              width: "100%",
-                              height: "100%",
-                           }}
-                        />
-                     </Box>
-                     <Box className="grid2AbsImg2">
-                        <img
-                           src={bg2}
-                           alt=""
-                           style={{
-                              width: "100%",
-                              height: "100%",
-                           }}
-                        />
-                     </Box>
                   </Box>
                </Grid>
-            </Grid>
-            <Box className="bottomCopyright">
-               <Box sx={{ width: "fit-content" }}>
-                  © Copyright 2024 © All Right Reserved. Developed by{" "}
-               </Box>
-               <Box
-                  onClick={() =>
-                     window.open("https://merovision.com/")
-                  }
-                  sx={{
-                     marginLeft: "4px",
-                     color: "#8521E7",
-                     "&:hover": {
-                        textDecoration: "underline",
-                        cursor: "pointer",
-                     },
-                  }}
+               <Grid
+                  item
+                  lg={6}
+                  md={12}
+                  sx={{ width: "100% !important" }}
                >
-                  Mero Vision Pvt. Ltd.
-               </Box>
-            </Box>
+                  <LoginForm />
+               </Grid>
+            </Grid>
          </Box>
       </>
    );
@@ -124,17 +88,6 @@ const LoginForm = () => {
    useEffect(() => {
       getError(error);
    }, [error]);
-
-   const handleNavigate = (res) => {
-      const checkRole = (roleToFind) => {
-         const data = res?.user?.role?.find(
-            (item) =>
-               item?.toLowerCase() === roleToFind?.toLowerCase()
-         );
-         return data ? true : false;
-      };
-      navigate("/switch-branch");
-   };
 
    const dispatch = useDispatch();
 
@@ -181,14 +134,15 @@ const LoginForm = () => {
                      <Box
                         sx={{
                            display: "flex",
-                           justifyContent: "center",
+                           justifyContent: "flex-start",
                            alignItems: "center",
+                           width: "100%",
                         }}
                      >
                         <Box
                            onClick={() => navigate("/")}
                            sx={{
-                              width: "200px",
+                              width: "120px",
                               height: "100%",
                               cursor: "pointer",
                               marginBottom: "20px",
@@ -204,14 +158,15 @@ const LoginForm = () => {
                            />
                         </Box>
                      </Box>
-                     <Box className="formTitle">Welcome back</Box>
+                     <Box className="formTitle">Hey, Hello 👋</Box>
                      <Box className="formSubtitle">
-                        Login to proceed
+                        Enter the information you entered while
+                        registering.{" "}
                      </Box>
                   </Box>
                   <Box>
                      <Box>
-                        <CustomInput
+                        <CustomInputDefault
                            control={control}
                            errors={errors}
                            name="email"
@@ -222,7 +177,7 @@ const LoginForm = () => {
                      </Box>
 
                      <Box mt={"24px"} mb={"10px"}>
-                        <CustomInput
+                        <CustomInputDefault
                            control={control}
                            errors={errors}
                            name="password"
@@ -232,29 +187,35 @@ const LoginForm = () => {
                         />
                      </Box>
                   </Box>
-                  {/* <Box sx={{ textAlign: "end !important" }}>
+                  <Box sx={{ textAlign: "end !important" }}>
                      <Typography
                         onClick={() => navigate("/forgot-password")}
                         sx={{
-                           color: "#4E7683",
+                           color: "#6259CA",
                            fontSize: "12px",
                            cursor: "pointer",
+
+                           "&:hover": {
+                              textDecoration: "underline",
+                              color: "#0064E1",
+                           },
                         }}
                      >
                         Forgot Password?
                      </Typography>
-                  </Box> */}
+                  </Box>
                   <Box className="buttonDiv" mt={"25px"} mb={"25px"}>
                      <Button
                         type="submit"
-                        // onClick={() => navigate("/dashboard")}
                         sx={{
                            width: "100%",
-                           height: "45px !important",
-                           backgroundColor: "#0a3a84 !important",
+                           height: "38px !important",
+                           backgroundColor: "#746be3 !important",
+                           borderRadius: "8px",
                            color: "#fff",
+                           textTransform: "capitalize",
                            "&:hover": {
-                              backgroundColor: "#0d48a5 !important",
+                              backgroundColor: "#6259CA !important",
                            },
                         }}
                      >
@@ -263,16 +224,102 @@ const LoginForm = () => {
                               size="1rem"
                               sx={{
                                  marginRight: "10px",
-                                 color: "#496ad0",
+                                 color: "#fff",
                               }}
                            />
                         )}
                         Login
                      </Button>{" "}
                   </Box>
+
+                  {/* <IconComp /> */}
+
+                  <Box
+                     sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        textAlign: "center",
+                     }}
+                  >
+                     <Box
+                        sx={{
+                           fontSize: "14px",
+                           fontWeight: "500",
+                           color: "#424242",
+                           marginBottom: "5px",
+                        }}
+                     >
+                        Don't have an account?
+                     </Box>
+                     <Box
+                        sx={{
+                           fontSize: "13px",
+                           fontWeight: "400",
+                           color: "#0064E1",
+                           width: "fit-content",
+                           cursor: "pointer",
+                           textAlign: "center",
+                           width: "100%",
+                           "&:hover": {
+                              textDecoration: "underline",
+                           },
+                        }}
+                     >
+                        Register as a Student{" "}
+                     </Box>
+                     <Box
+                        sx={{
+                           fontSize: "13px",
+                           fontWeight: "400",
+                           color: "#0064E1",
+                           width: "fit-content",
+                           cursor: "pointer",
+                           textAlign: "center",
+                           width: "100%",
+
+                           "&:hover": {
+                              textDecoration: "underline",
+                           },
+                        }}
+                     >
+                        Register as a Recruitment Partner
+                     </Box>
+                  </Box>
+               </Box>
+            </Box>
+            <Box className="bottomCopyright">
+               <Box sx={{ width: "fit-content" }}>
+                  © Copyright 2024 © All Right Reserved. Developed by{" "}
+               </Box>
+               <Box
+                  onClick={() =>
+                     window.open("https://merovision.com/")
+                  }
+                  sx={{
+                     marginLeft: "4px",
+                     color: "#6259CA",
+                     "&:hover": {
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                     },
+                  }}
+               >
+                  Mero Vision Pvt. Ltd.
                </Box>
             </Box>
          </Box>
       </form>
+   );
+};
+
+const IconComp = () => {
+   return (
+      <Box sx={{ width: "30px", height: "30px" }}>
+         <img
+            src={fbIcon}
+            alt="icon"
+            style={{ width: "100%", height: "100%" }}
+         />
+      </Box>
    );
 };

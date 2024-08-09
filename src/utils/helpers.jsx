@@ -55,7 +55,7 @@ export const changeDateFormat = (date, format = "DD/MMM/YYYY") => {
 
 export const getSiteDetail = () => {
    const access_token = localStorage.getItem("admin_access_token");
-   const user = localStorage.getItem("user");
+   const user = JSON.parse(localStorage.getItem("user"));
 
    return {
       token: access_token,

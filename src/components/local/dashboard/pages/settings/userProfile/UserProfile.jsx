@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { EditOutlined } from "@mui/icons-material";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -16,24 +16,31 @@ import Logo from "../../../../../../assets/logo.png";
 // import { CustomInput } from "../../../common/CustomInputs/CustomInput";
 // import CustomLoader from "../../../common/CustomLoader/CustomLoader";
 // import CustomPaper from "../../../common/CustomPaper/CustomPaper";
-import { getCharacterValidationError } from "../../../../../../utils/helpers";
+import {
+   useGetSingleUserQuery,
+   usePostUserPasswordUpdateMutation,
+} from "../../../../../../api/userApi";
+import {
+   getError,
+   getSiteDetail,
+} from "../../../../../../utils/helpers";
 import CustomButton from "../../../../../common/CustomButton/CustomButton";
-import { CustomInput } from "../../../../../common/CustomInputs/CustomInput";
+import { CustomInputDefault } from "../../../../../common/CustomInputs/CustomInputDefault";
 import CustomLoaderLin from "../../../../../common/CustomLoader/CustomLoaderLin";
 import CustomPaper from "../../../../../common/CustomPaper/CustomPaper";
 import styles from "./styles";
 
 const schema = Yup.object().shape({
-   old_password: Yup.string().required(
+   current_password: Yup.string().required(
       "Current Password is required"
    ),
    password: Yup.string()
       .required("Password is required")
-      .min(8, "Password must be 8 characters or more")
-      .matches(/[a-z]+/, getCharacterValidationError("lowercase"))
-      .matches(/[A-Z]+/, getCharacterValidationError("uppercase"))
-      .matches(/[@$!%*#?&]+/, getCharacterValidationError("special"))
-      .matches(/\d+/, "Your password must contain at least 1 number"),
+      .min(8, "Password must be 8 characters or more"),
+   // .matches(/[a-z]+/, getCharacterValidationError("lowercase"))
+   // .matches(/[A-Z]+/, getCharacterValidationError("uppercase"))
+   // .matches(/[@$!%*#?&]+/, getCharacterValidationError("special"))
+   // .matches(/\d+/, "Your password must contain at least 1 number"),
    password_confirmation: Yup.string()
       .required("Please re-type your password")
       .transform((value, originalValue) =>
@@ -48,8 +55,7 @@ const UserProfile = () => {
    const classes = styles();
    const navigate = useNavigate();
    const [changed, setChanged] = useState(false);
-   const userData = JSON.parse(localStorage?.getItem("user"));
-
+   const userData = getSiteDetail()?.userData;
    const {
       control,
       formState: { errors },
@@ -58,76 +64,56 @@ const UserProfile = () => {
       handleSubmit,
    } = useForm({ resolver: yupResolver(schema) });
 
-   // const {
-   //    data: singleUserInfo,
-   //    isLoading: querySingleUserLoading,
-   //    isFetching,
-   // } = useGetSingleUserInfoQuery();
+   const {
+      data: singleUserInfo,
+      isLoading: querySingleUserLoading,
+      isFetching,
+   } = useGetSingleUserQuery(userData?.id);
    const { company } = useSelector((state) => state?.utils);
    const data = [
       {
          title: "Email address",
-         value: "-",
+         value: singleUserInfo?.data?.email || "-",
       },
       {
          title: "Mobile No.",
-         value: "-",
-      },
-      {
-         title: "Address",
-         value: "-",
+         value: singleUserInfo?.data?.phone || "-",
       },
    ];
 
-   // useEffect(() => {
-   //    const rate_type = watch("rate_type");
-   //    changed && postSettings({ rate_type });
-   // }, [watch("rate_type"), changed]);
-   // useEffect(() => {
-   //    if (isSuccess) {
-   //       customToaster({
-   //          type: "success",
-   //          message: successData?.message || "Success",
-   //       });
-   //    }
-   // }, [isSuccess]);
-   // useEffect(() => {
-   //    getError(error);
-   // }, [error]);
-
-   // const [
-   //    postUserChangePassword,
-   //    {
-   //       error: editError,
-   //       isLoading: isEditLoading,
-   //       isSuccess: isEditSuccess,
-   //       data: editSuccessData,
-   //    },
-   // ] = usePostUserChangePasswordMutation();
+   const [
+      postUserPasswordUpdate,
+      {
+         error: editError,
+         isLoading: isEditLoading,
+         isSuccess: isEditSuccess,
+         data: editSuccessData,
+      },
+   ] = usePostUserPasswordUpdateMutation();
+   useEffect(() => {
+      getError(editError);
+   }, [editError]);
 
    const submitHandler = (data) => {
       console.log({ data });
-      // const finalData = {
-      //    ...data,
-      //    _method: "PUT",
-      // };
-      // postUserChangePassword(finalData)
-      //    .unwrap()
-      //    .then(() => {
-      //       successToast("changed password sucessfully");
-      //    })
-      //    .catch((error) => errorToast(error));
+      const finalData = {
+         ...data,
+      };
+      postUserPasswordUpdate(finalData)
+         .unwrap()
+         .then(() => {
+            successToast("changed password sucessfully");
+         })
+         .catch((error) => errorToast(error));
    };
 
-   // useEffect(() => {
-   //    if (isEditSuccess) {
-   //       setValue("old_password", "");
-   //       setValue("password", "");
-   //       setValue("password_confirmation", "");
-   //    }
-   // }, [isEditSuccess, setValue]);
-
-   const isFetching = false;
+   useEffect(() => {
+      if (isEditSuccess) {
+         setValue("current_password", "");
+         setValue("password", "");
+         setValue("password_confirmation", "");
+      }
+   }, [isEditSuccess, setValue]);
 
    return (
       <Box
@@ -142,7 +128,19 @@ const UserProfile = () => {
             modalTitle={"User Profile"}
             button={
                <Button
-                  startIcon={<EditOutlined />}
+                  sx={{
+                     border: "1px solid #4C7CE5",
+                     color: "#4C7CE5",
+                     fontSize: "13px !important",
+                     fontWeight: "500 !important",
+                     textTransform: "capitalize",
+                     // padding: "6px 8px !important",
+                  }}
+                  startIcon={
+                     <EditOutlined
+                        sx={{ fontSize: "18px !important" }}
+                     />
+                  }
                   variant="outlinedButton"
                   onClick={() => navigate("edit")}
                >
@@ -156,12 +154,10 @@ const UserProfile = () => {
                <Box display={"flex"} columnGap={"45px"} mb={"2rem"}>
                   <Box className={classes.profilePicture}>
                      <Avatar
-                        src={Logo}
-                        alt={"name"}
-                        // src={
-                        //    singleUserInfo?.data?.profile_image || Logo
-                        // }
-                        // alt={singleUserInfo?.data?.name}
+                        src={
+                           singleUserInfo?.data?.profile_image || Logo
+                        }
+                        alt={singleUserInfo?.data?.name}
                      />
                   </Box>
                   <Box>
@@ -175,18 +171,8 @@ const UserProfile = () => {
                                     color: "#201F37",
                                  }}
                               >
-                                 {"-"}{" "}
+                                 {singleUserInfo?.data?.name ?? "-"}{" "}
                               </Typography>
-                              {/* <Typography
-                                 sx={{
-                                    fontSize: "14px",
-                                    fontWeight: 400,
-                                    color: "#4C4B63",
-                                 }}
-                              >
-                                 {singleUserInfo?.data
-                                    ?.display_name ?? "-"}{" "}
-                              </Typography> */}
                            </Box>
                         </Grid>
                         {data?.map((item) => (
@@ -208,16 +194,16 @@ const UserProfile = () => {
                         <Box>
                            <Grid container spacing={4}>
                               <Grid item sm={12}>
-                                 <CustomInput
+                                 <CustomInputDefault
                                     title="Current Password"
-                                    name="old_password"
+                                    name="current_password"
                                     type="password"
                                     control={control}
                                     errors={errors}
                                  />
                               </Grid>
                               <Grid item sm={6}>
-                                 <CustomInput
+                                 <CustomInputDefault
                                     title="New Password"
                                     name="password"
                                     type="password"
@@ -226,7 +212,7 @@ const UserProfile = () => {
                                  />
                               </Grid>
                               <Grid item sm={6}>
-                                 <CustomInput
+                                 <CustomInputDefault
                                     title="Confirm Password"
                                     name="password_confirmation"
                                     type="password"
@@ -245,10 +231,10 @@ const UserProfile = () => {
                         >
                            <CustomButton
                               buttonName={"Change Password"}
-                              // loading={isEditLoading}
-                              // error={editError}
-                              // success={isEditSuccess}
-                              // successData={editSuccessData}
+                              loading={isEditLoading}
+                              error={editError}
+                              success={isEditSuccess}
+                              successData={editSuccessData}
                            />
                         </Box>
                      </form>

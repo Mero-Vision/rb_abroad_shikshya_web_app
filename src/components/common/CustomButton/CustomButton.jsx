@@ -39,14 +39,15 @@ const CustomButton = ({
          marginTop={margin || "17px"}
       >
          <Button
-            sx={
-               pos && {
-                  backgroundColor: "#FF9E2A",
-                  "&:hover": {
-                     backgroundColor: "#FF9E2A",
-                  },
-               }
-            }
+            sx={{
+               backgroundColor: "#746be3 !important",
+               borderRadius: "8px",
+               color: "#fff",
+               textTransform: "capitalize",
+               "&:hover": {
+                  backgroundColor: "#6259CA !important",
+               },
+            }}
             variant={variant || "contained"}
             type={type || "submit"}
             disabled={disabled || loading}
@@ -56,7 +57,7 @@ const CustomButton = ({
             {loading && (
                <CircularProgress
                   size="1rem"
-                  sx={{ marginRight: "10px", color: "#496ad0" }}
+                  sx={{ marginRight: "10px", color: "#fff" }}
                />
             )}
             {buttonName || "Save"}
